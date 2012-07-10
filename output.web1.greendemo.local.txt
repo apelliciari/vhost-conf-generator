@@ -1,0 +1,24 @@
+create:web1.greendemo.local::603:48::/var/www/vhosts/web1.greendemo.local:/sbin/nologin:::::
+/var/www/vhosts/web1.greendemo.local/logs/*log
+
+[Greendemo_Web1]
+	force create mode = 600
+	force user = web1.greendemo.local
+	delete readonly = yes
+	writeable = yes
+	create mode = 644
+	path = /var/www/vhosts/web1.greendemo.local
+	force group = apache
+
+<VirtualHost 192.168.2.109:80>
+    DocumentRoot /var/www/vhosts/web1.greendemo.local/htdocs
+    ServerName web1.greendemo.local
+    <Directory "/var/www/vhosts/web1.greendemo.local/htdocs">
+    Options -Indexes FollowSymLinks
+    AllowOverride All
+    </Directory>
+    ErrorLog /var/www/vhosts/web1.greendemo.local/logs/error_log
+    CustomLog /var/www/vhosts/web1.greendemo.local/logs/access_log combined
+</VirtualHost>
+mkdir /var/www/vhosts/web1.greendemo.local/logs /var/www/vhosts/web1.greendemo.local/htdocs
+chown web1.greendemo.local:apache /var/www/vhosts/web1.greendemo.local/htdocs

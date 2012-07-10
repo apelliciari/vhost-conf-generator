@@ -1,0 +1,96 @@
+create:dev2.furla.local::574:48::/var/www/vhosts/dev2.furla.local:/sbin/nologin:::::
+create:dev2.furla-backend.local::575:48::/var/www/vhosts/dev2.furla-backend.local:/sbin/nologin:::::
+create:dev2.furla-branch.local::576:48::/var/www/vhosts/dev2.furla-branch.local:/sbin/nologin:::::
+create:dev2.furla-backend-branch.local::577:48::/var/www/vhosts/dev2.furla-backend-branch.local:/sbin/nologin:::::
+/var/www/vhosts/dev2.furla.local/logs/*log
+/var/www/vhosts/dev2.furla-backend.local/logs/*log
+/var/www/vhosts/dev2.furla-branch.local/logs/*log
+/var/www/vhosts/dev2.furla-backend-branch.local/logs/*log
+
+[Furla_Dev2]
+	force create mode = 600
+	force user = dev2.furla.local
+	delete readonly = yes
+	writeable = yes
+	create mode = 644
+	path = /var/www/vhosts/dev2.furla.local
+	force group = apache
+
+[Furla_Backend_Dev2]
+	force create mode = 600
+	force user = dev2.furla-backend.local
+	delete readonly = yes
+	writeable = yes
+	create mode = 644
+	path = /var/www/vhosts/dev2.furla-backend.local
+	force group = apache
+
+[Furla_Branch_Dev2]
+	force create mode = 600
+	force user = dev2.furla-branch.local
+	delete readonly = yes
+	writeable = yes
+	create mode = 644
+	path = /var/www/vhosts/dev2.furla-branch.local
+	force group = apache
+
+[Furla_Backend_Branch_Dev2]
+	force create mode = 600
+	force user = dev2.furla-backend-branch.local
+	delete readonly = yes
+	writeable = yes
+	create mode = 644
+	path = /var/www/vhosts/dev2.furla-backend-branch.local
+	force group = apache
+
+<VirtualHost 192.168.2.111:80>
+    DocumentRoot /var/www/vhosts/dev2.furla.local/htdocs
+    ServerName dev2.furla.local
+    <Directory "/var/www/vhosts/dev2.furla.local/htdocs">
+    Options -Indexes FollowSymLinks
+    AllowOverride All
+    </Directory>
+    ErrorLog /var/www/vhosts/dev2.furla.local/logs/error_log
+    CustomLog /var/www/vhosts/dev2.furla.local/logs/access_log combined
+</VirtualHost>
+
+<VirtualHost 192.168.2.111:80>
+    DocumentRoot /var/www/vhosts/dev2.furla-backend.local/htdocs
+    ServerName dev2.furla-backend.local
+    <Directory "/var/www/vhosts/dev2.furla-backend.local/htdocs">
+    Options -Indexes FollowSymLinks
+    AllowOverride All
+    </Directory>
+    ErrorLog /var/www/vhosts/dev2.furla-backend.local/logs/error_log
+    CustomLog /var/www/vhosts/dev2.furla-backend.local/logs/access_log combined
+</VirtualHost>
+
+<VirtualHost 192.168.2.111:80>
+    DocumentRoot /var/www/vhosts/dev2.furla-branch.local/htdocs
+    ServerName dev2.furla-branch.local
+    <Directory "/var/www/vhosts/dev2.furla-branch.local/htdocs">
+    Options -Indexes FollowSymLinks
+    AllowOverride All
+    </Directory>
+    ErrorLog /var/www/vhosts/dev2.furla-branch.local/logs/error_log
+    CustomLog /var/www/vhosts/dev2.furla-branch.local/logs/access_log combined
+</VirtualHost>
+
+<VirtualHost 192.168.2.111:80>
+    DocumentRoot /var/www/vhosts/dev2.furla-backend-branch.local/htdocs
+    ServerName dev2.furla-backend-branch.local
+    <Directory "/var/www/vhosts/dev2.furla-backend-branch.local/htdocs">
+    Options -Indexes FollowSymLinks
+    AllowOverride All
+    </Directory>
+    ErrorLog /var/www/vhosts/dev2.furla-backend-branch.local/logs/error_log
+    CustomLog /var/www/vhosts/dev2.furla-backend-branch.local/logs/access_log combined
+</VirtualHost>
+mkdir /var/www/vhosts/dev2.furla.local/logs /var/www/vhosts/dev2.furla.local/htdocs
+chown dev2.furla.local:apache /var/www/vhosts/dev2.furla.local/htdocs
+mkdir /var/www/vhosts/dev2.furla-backend.local/logs /var/www/vhosts/dev2.furla-backend.local/htdocs
+chown dev2.furla-backend.local:apache /var/www/vhosts/dev2.furla-backend.local/htdocs
+mkdir /var/www/vhosts/dev2.furla-branch.local/logs /var/www/vhosts/dev2.furla-branch.local/htdocs
+chown dev2.furla-branch.local:apache /var/www/vhosts/dev2.furla-branch.local/htdocs
+mkdir /var/www/vhosts/dev2.furla-backend-branch.local/logs /var/www/vhosts/dev2.furla-backend-branch.local/htdocs
+chown dev2.furla-backend-branch.local:apache /var/www/vhosts/dev2.furla-backend-branch.local/htdocs
