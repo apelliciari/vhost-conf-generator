@@ -1,113 +1,30 @@
-import os
+import os, datetime
 from optparse import OptionParser
 from libraries import Vhost
+import yaml
 
-parser = OptionParser()
-parser.add_option("--user", dest="user",
-                  help="Nome spazio (e utente di conseguenza)")
 
-(options, args) = parser.parse_args(['--user=dev3.from-italy.local'])
-
-print options
-
-#host_ip = "192.168.2.109" steppa
-host_ip = "192.168.2.109" #tundra
-
-spazi = (
-        {
-            'user': 'web1.greendemo.local',
-            'samba_share': 'Greendemo_Web1'
-        },
-        {
-            'user': 'dev2.furla-backend.local',
-            'samba_share': 'Furla_Backend_Dev2'
-        },
-        {
-            'user': 'dev2.furla-branch.local',
-            'samba_share': 'Furla_Branch_Dev2'
-        },
-        {
-            'user': 'dev2.furla-backend-branch.local',
-            'samba_share': 'Furla_Backend_Branch_Dev2'
-        },
-        )
-
-#spazi = (
-        #{
-         #'user': 'dev3.from-italy.local',
-         #'samba_share': 'From_Italy_Dev3'
-        #},
-        #{
-         #'user': 'dev3-admin.from-italy.local',
-         #'samba_share': 'From_Italy_Admin_Dev3'
-        #},
-        #{
-         #'user': 'dev3-reed.from-italy.local',
-         #'samba_share': 'From_Italy_Reed_Dev3'
-        #},
-        #{
-         #'user': 'dev4.from-italy.local',
-         #'samba_share': 'From_Italy_Dev4'
-        #},
-        #{
-         #'user': 'dev4-admin.from-italy.local',
-         #'samba_share': 'From_Italy_Admin_Dev4'
-        #},
-        #{
-         #'user': 'dev4-reed.from-italy.local',
-         #'samba_share': 'From_Italy_Reed_Dev4'
-        #},
-        #{
-         #'user': 'dev5.from-italy.local',
-         #'samba_share': 'From_Italy_Dev5'
-        #},
-        #{
-         #'user': 'dev5-admin.from-italy.local',
-         #'samba_share': 'From_Italy_Admin_Dev5'
-        #},
-        #{
-         #'user': 'dev5-reed.from-italy.local',
-         #'samba_share': 'From_Italy_Reed_Dev5'
-        #},
-        #{
-         #'user': 'web1.from-italy.local',
-         #'samba_share': 'From_Italy_Web1'
-        #},
-        #{
-         #'user': 'web1-admin.from-italy.local',
-         #'samba_share': 'From_Italy_Admin_Web1'
-        #},
-        #{
-         #'user': 'web1-reed.from-italy.local',
-         #'samba_share': 'From_Italy_Reed_Web1'
-        #},
-        #)
-
-question = "Scrivi l'ultimo user id utilizzato: ";
+stream = file('config.yml', 'r')    # 'document.yaml' contains a single YAML document.
+yaml_result = yaml.load(stream)
 
 vhosts = []
 
-for spazio in spazi:
-    vhosts.append(Vhost(spazio["user"], spazio["samba_share"]))
+for vhost in yaml_result['vhosts']:
+    vhosts.append(Vhost.from_yaml(vhost, yaml_result['defaults']))
 
-
-
-#vhost = Vhost(options.user)
-
-last_user_id = raw_input(question)
+for vhost in vhosts:
+    print vhost.__dict__
 
 path = os.path.dirname(os.path.abspath(__file__))
 
-
+#altre operazioni necessarie
 for vhost in vhosts:
-    last_user_id = int(last_user_id) + 1
-    vhost.user_id = last_user_id
-    vhost.host_ip = host_ip
+    vhost.host_ip = yaml_result['defaults']['ip']
     vhost.generate_strings(path)
 
 #user
 
-f = open(path + r"\output.txt", "w")
+f = open(path + r"\output" + datetime.datetime.now().strftime("%Y-%m-%d.%H-%m") + ".txt", "w")
 
 for vhost in vhosts:
     f.write(vhost.user_string)
@@ -123,35 +40,4 @@ for vhost in vhosts:
 f.close()
 
 exit()
-
-#print "Copia questa stringa in webmin/creazione utenti: "
-
-#print vhost.open_and_replace( path + r"\templates\user.tpl")
-
-#question = "Premi un qualsiasi tasto per continuare quando hai fatto. "
-
-#choice = raw_input("Premi invio per continuare quando hai fatto. ")
-
-
-# logs
-# accontentiamoci intanto
-
-exit()
-
-print "Log Rotation:"
-print vhost.open_and_replace( path + r"\templates\logrotate.tpl")
-
-#f = open("/etc/logrotate.d/httpd")
-
-print "Log Rotation:"
-print vhost.open_and_replace( path + r"\templates\samba.tpl")
-
-print "Log Rotation:"
-print vhost.open_and_replace( path + r"\templates\vhost.tpl")
-
-print "Log Rotation:"
-print vhost.open_and_replace( path + r"\templates\cmd.tpl")
-
-print "Log Rotation:"
-print vhost.open_and_replace( path + r"\templates\logrotate.tpl")
 
