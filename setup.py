@@ -5,6 +5,8 @@ import yaml
 import pymssql, _mssql, uuid, decimal
 from pprint import pprint, pformat
 
+# per pyinstaller
+resource_path = os.environ.get("_MEIPASS2", os.path.abspath(".") )
 
 parser = OptionParser()
 parser.add_option("-c", "--conf", dest="config_file", default="config.yml",
@@ -21,6 +23,7 @@ for vhost in yaml_result['vhosts']:
     vhosts.append(Vhost.from_yaml(vhost, yaml_result['defaults']))
 
 path = os.path.dirname(os.path.abspath(__file__))
+
 output_dir = path + r"\output"
 
 if not os.path.exists(output_dir):
@@ -29,7 +32,7 @@ if not os.path.exists(output_dir):
 #altre operazioni necessarie
 for vhost in vhosts:
     vhost.host_ip = yaml_result['defaults']['ip']
-    vhost.generate_strings(path)
+    vhost.generate_strings(resource_path)
 
 print "PARSED: "
 
