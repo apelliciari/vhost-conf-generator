@@ -2,7 +2,7 @@ import os, datetime
 from optparse import OptionParser
 from libraries import Vhost
 import yaml
-import pymssql
+import pymssql, _mssql
 from pprint import pprint, pformat
 
 
