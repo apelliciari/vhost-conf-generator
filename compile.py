@@ -28,8 +28,8 @@ projectfolder = os.getcwd() + '\\'
 executablesfolder = projectfolder + 'executables\\'
 
 print projectfolder
-version = '-r' + str(retrieveVersion())
-projectname = 'vhost-conf-generator' + version
+version = str(retrieveVersion())
+projectname = 'vhost-conf-generator' + "-" + retrieveVersion()
 
 makespec = 'python Makespec.py -F -X -o ' + executablesfolder + ' -n "'+ projectname + '" --icon="' + projectfolder + 'salta-ai-risultati.ico" ' + projectfolder + 'setup.py'
 print makespec
