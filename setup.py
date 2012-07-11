@@ -7,7 +7,7 @@ from pprint import pprint, pformat
 
 # per pyinstaller
 resource_path = os.environ.get("_MEIPASS2", os.path.abspath(".") )
-
+print resource_path
 parser = OptionParser()
 parser.add_option("-c", "--conf", dest="config_file", default="config.yml",
                   help="Nome file con le definizioni degli spazi (in formato YAML, .yml)")
@@ -110,5 +110,4 @@ if yaml_result["options"]["write_in_netposition"]:
     conn.commit()
     conn.close()
 
-exit()
 
