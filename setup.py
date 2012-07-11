@@ -7,12 +7,12 @@ from pprint import pprint, pformat
 
 
 parser = OptionParser()
-parser.add_option("-c", "--conf", dest="config", default="config.yml",
+parser.add_option("-c", "--conf", dest="config_file", default="config.yml",
                   help="Nome file con le definizioni degli spazi (in formato YAML, .yml)")
 
 (options, args) = parser.parse_args()
 
-stream = file('config.yml', 'r')    # 'document.yaml' contains a single YAML document.
+stream = file(options.config_file, 'r')    # 'document.yaml' contains a single YAML document.
 yaml_result = yaml.load(stream)
 
 vhosts = []
