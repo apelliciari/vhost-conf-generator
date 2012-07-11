@@ -31,7 +31,7 @@ print projectfolder
 version = '-r' + str(retrieveVersion())
 projectname = 'vhost-conf-generator' + version
 
-makespec = 'python Makespec.py -o ' + executablesfolder + ' -n "'+ projectname + '" --icon="' + projectfolder + 'salta-ai-risultati.ico" ' + projectfolder + 'setup.py'
+makespec = 'python Makespec.py -F -X -o ' + executablesfolder + ' -n "'+ projectname + '" --icon="' + projectfolder + 'salta-ai-risultati.ico" ' + projectfolder + 'setup.py'
 print makespec
 buildspec = 'python Build.py ' + executablesfolder +  projectname + '.spec'
 
