@@ -12,10 +12,6 @@ parser.add_option("-c", "--conf", dest="config", default="config.yml",
 
 (options, args) = parser.parse_args()
 
-print options
-print args
-exit()
-
 stream = file('config.yml', 'r')    # 'document.yaml' contains a single YAML document.
 yaml_result = yaml.load(stream)
 
