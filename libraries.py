@@ -49,6 +49,7 @@ class Vhost:
                 vhost_name=yaml_block.get('vhost_name', None))
 
         vhost.shell = yaml_block['shell'] if yaml_block.get('shell', None) else yaml_defaults['shell']
+        vhost.password = '' if yaml_block.get('nopassword', None) or yaml_defaults.get('nopassword', None) else vhost.password
 
         return vhost
 
@@ -75,7 +76,18 @@ class Vhost:
     def generate_strings(self, path):
        self.user_string = self.open_and_replace( path + r"\templates\user.tpl")
        self.logrotate_string = self.open_and_replace( path + r"\templates\logrotate.tpl")
-       self.samba_string = self.open_and_replace( path + r"\templates\samba.tpl")
+       if self.samba_share:
+           self.samba_string = self.open_and_replace( path + r"\templates\samba.tpl")
+       else:
+           self.samba_string = ""
        self.vhost_string = self.open_and_replace( path + r"\templates\vhost.tpl")
        self.cmd_string = self.open_and_replace( path + r"\templates\cmd.tpl")
 
+    def prospect(self):
+        return {
+              'url': self.vhost_name,
+              'user': self.user,
+              'password': self.password,
+              'samba': self.samba_share,
+              'document_root': self.document_root
+            }
