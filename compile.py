@@ -8,14 +8,21 @@
 #!/usr/bin/env python
 
 import os
+import subprocess
 
 ## 'python Makespec.py -w -o C:\Home\Python\check-301s\ -n "'+ projectname + '" --icon="C:\Home\Python\check-301s\salta-ai-risultati.ico" C:\Home\Python\check-301s\__init__.py'
+
+def version ():
+    command = r"git --git-dir=C:\Users\alessandro\Desktop\vhost_generator\.git rev-parse HEAD"
+    return subprocess.check_output(command.split(), shell=True).rstrip('\r\n')
+
+f = open('version',  'w')
+f.write( str(version()[0:10]) )
+f.close()
 
 pyinstallerfolder = 'C:/Home/Python/pyinstaller-1.5-rc1'
 projectfolder = os.getcwd() + '\\'
 executablesfolder = projectfolder + 'executables\\'
-
-projectname = 'vhost-conf-generator' + "-" + retrieveVersion()
 
 buildspec = 'python Build.py ' + projectfolder + 'spec.py'
 

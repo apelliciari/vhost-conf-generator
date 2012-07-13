@@ -1,9 +1,7 @@
 # -*- mode: python -*-
-
-
-def version ():
-    command = r"git --git-dir=C:\Users\alessandro\Desktop\vhost_generator\.git rev-parse HEAD"
-    return subprocess.check_output(command.split(), shell=True).rstrip('\r\n')
+f = open("C:\\Users\\alessandro\\Desktop\\vhost_generator\\version")
+version = f.read()
+f.close()
 
 a = Analysis([os.path.join(HOMEPATH,'support\\_mountzlib.py'), os.path.join(HOMEPATH,'support\\useUnicode.py'), 'C:\\Users\\alessandro\\Desktop\\vhost_generator\\setup.py'],
              pathex=['C:\\Home\\Python\\pyinstaller-1.5-rc1'])
@@ -20,7 +18,7 @@ exe = EXE( pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          name=os.path.join('dist', 'vhost-conf-generator-'+ version() + '.exe'),
+          name=os.path.join('dist', 'vhost-conf-generator-'+ version + '.exe'),
           debug=False,
           strip=False,
           upx=True,
