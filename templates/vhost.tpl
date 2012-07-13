@@ -2,6 +2,7 @@
 <VirtualHost {{host_ip}}:80>
     DocumentRoot {{document_root}}
     ServerName {{vhost_name}}
+    ServerAlias {{vhost_name}}
     <Directory "{{document_root}}">
     Options All
     AllowOverride All
