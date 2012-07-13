@@ -4,8 +4,7 @@
     ServerName {{vhost_name}}
     ServerAlias {{vhost_name}}
     <Directory "{{document_root}}">
-    Options All
-    AllowOverride All
+    {{vhost_directory_options}}
     </Directory>
     ErrorLog {{user_home}}/logs/error_log
     CustomLog {{user_home}}/logs/access_log combined

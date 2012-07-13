@@ -3,7 +3,7 @@ import mmap, string, random
 class Vhost:
 
     def __init__(self, user, user_home=None, document_root=None, samba_share=None, shell=None, password=None,
-            vhost_directives=None, vhost_name=None):
+            vhost_directives=None, vhost_name=None, vhost_directory_options=None ):
 
         self.user = user
 
@@ -21,6 +21,11 @@ class Vhost:
         if not document_root or document_root is None:
             document_root = user_home + "/htdocs"
         self.document_root = document_root
+
+        if not vhost_directory_options or vhost_directory_options is None:
+            vhost_directory_options = """Options All
+    AllowOverrideAll"""
+        self.vhost_directory_options = vhost_directory_options
 
         self.apache_group_id = 48
 
@@ -49,6 +54,10 @@ class Vhost:
                 vhost_name=yaml_block.get('vhost_name', None))
 
         vhost.shell = yaml_block['shell'] if yaml_block.get('shell', None) else yaml_defaults['shell']
+
+        if yaml_block.get('vhost_directory_options', None):
+            vhost.vhost_directory_options = yaml_block['vhost_directory_options']
+
         vhost.password = '' if yaml_block.get('nopassword', None) or yaml_defaults.get('nopassword', None) else vhost.password
 
         return vhost
@@ -85,9 +94,9 @@ class Vhost:
 
     def prospect(self):
         return {
-              'url': self.vhost_name,
-              'user': self.user,
-              'password': self.password,
-              'samba': self.samba_share,
-              'document_root': self.document_root
-            }
+                'url': self.vhost_name,
+                'user': self.user,
+                'password': self.password,
+                'samba': self.samba_share,
+                'document_root': self.document_root
+                }
