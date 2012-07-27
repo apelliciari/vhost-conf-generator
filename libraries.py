@@ -24,7 +24,7 @@ class Vhost:
 
         if not vhost_directory_options or vhost_directory_options is None:
             vhost_directory_options = """Options All
-    AllowOverrideAll"""
+    AllowOverride All"""
         self.vhost_directory_options = vhost_directory_options
 
         self.apache_group_id = 48
