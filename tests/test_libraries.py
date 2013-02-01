@@ -4,41 +4,85 @@ from libraries import Vhost
 import os
 
 class TestVhost:
-    def test_init_only_user(self):
+    #def test_init_only_user(self):
 
-        vhost = Vhost(
-                user="dev3.piquadro.local"
-                )
+        #vhost = Vhost(
+                #user=User(name="dev3.piquadro.local")
+                #)
 
-        assert vhost.user == 'dev3.piquadro.local'
+        #assert vhost.user.name == 'dev3.piquadro.local'
+        #assert vh
+        #assert vhost.vhost_name == 'dev3.piquadro.local'
+        #assert vhost.user_home == '/var/www/vhosts/dev3.piquadro.local'
+        #assert vhost.vhost_root == '/var/www/vhosts/dev3.piquadro.local'
+        #assert vhost.document_root == '/var/www/vhosts/dev3.piquadro.local/htdocs'
+        #assert vhost.samba_share is None
+        #assert vhost.shell is None
+        #assert vhost.vhost_directives is None
+        #assert vhost.vhost_directory_options == """Options All
+    #AllowOverride All"""
+
+    #def test_init_only_user_no_www(self):
+
+        #vhost = Vhost(
+                #user="piquadro.local"
+                #)
+
+        #assert vhost.user == 'piquadro.local'
+        #assert vhost.vhost_name == 'www.piquadro.local'
+        #assert vhost.user_home == '/var/www/vhosts/piquadro.local'
+        #assert vhost.vhost_root == '/var/www/vhosts/www.piquadro.local'
+        #assert vhost.document_root == '/var/www/vhosts/www.piquadro.local/htdocs'
+        #assert vhost.samba_share is None
+        #assert vhost.shell is None
+        #assert vhost.password is not None
+        #assert vhost.vhost_directives is None
+        #assert vhost.vhost_directory_options == """Options All
+    #AllowOverride All"""
+
+
+    def test_yaml_simple(self):
+        yaml_test = """
+--- # config
+
+defaults:
+    ip: "192.168.2.106"
+    shell: /sbin/nologin
+
+options:
+    write_in_netposition: 0
+
+vhosts:
+  vhost:
+    root: "/var/www/vhost/webtests/webtest.greendemo.local"
+    user:
+      name: 'webtest.greendemo.local'
+      samba: 'Greendemo_WebTest'
+      group:
+        name: 'nginx'
+        id: 45
+        """
+
+        yaml_result = yaml.load(yaml_test)
+
+        for yaml_vhost in yaml_result['vhosts']:
+            vhosts.append(Vhost.yaml( dict(yaml_defaults.items() + yaml_vhost.items()) )
+
+
+        assert vhost.name == 'webtest.greendemo.local'
+        assert vhost.root == "/var/www/vhost/webtests/webtest.greendemo.local"
+        assert vhost.document_root == 'webtest.greendemo.local'
+        assert vhost.user.name == 'dev3.piquadro.local'
+        assert vh
         assert vhost.vhost_name == 'dev3.piquadro.local'
         assert vhost.user_home == '/var/www/vhosts/dev3.piquadro.local'
         assert vhost.vhost_root == '/var/www/vhosts/dev3.piquadro.local'
         assert vhost.document_root == '/var/www/vhosts/dev3.piquadro.local/htdocs'
         assert vhost.samba_share is None
         assert vhost.shell is None
-        assert vhost.password is not None
         assert vhost.vhost_directives is None
         assert vhost.vhost_directory_options == """Options All
-    AllowOverride All"""
 
-    def test_init_only_user_no_www(self):
-
-        vhost = Vhost(
-                user="piquadro.local"
-                )
-
-        assert vhost.user == 'piquadro.local'
-        assert vhost.vhost_name == 'www.piquadro.local'
-        assert vhost.user_home == '/var/www/vhosts/piquadro.local'
-        assert vhost.vhost_root == '/var/www/vhosts/www.piquadro.local'
-        assert vhost.document_root == '/var/www/vhosts/www.piquadro.local/htdocs'
-        assert vhost.samba_share is None
-        assert vhost.shell is None
-        assert vhost.password is not None
-        assert vhost.vhost_directives is None
-        assert vhost.vhost_directory_options == """Options All
-    AllowOverride All"""
 
     def test_render(self):
         vhost = Vhost(

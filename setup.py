@@ -37,7 +37,7 @@ if not os.path.exists(output_dir):
 
 #altre operazioni necessarie
 for vhost in vhosts:
-    vhost.host_ip = yaml_result['defaults']['ip']
+    #vhost.host_ip = yaml_result['defaults']['ip']
     vhost.generate_strings(resource_path)
 
 print "PARSED: "

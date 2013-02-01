@@ -3,6 +3,7 @@
 import mmap
 import string
 import random
+import settings
 from jinja2 import Template
 
 class Vhost:
@@ -38,8 +39,7 @@ class Vhost:
         self.document_root = document_root
 
         if not directory_options or directory_options is None:
-            directory_options = """Options All
-    AllowOverride All"""
+            directory_options = settings.DEFAULT_VHOST_DIRECTIVES
         self.directory_options = directory_options
 
         if not ip or ip is None:
