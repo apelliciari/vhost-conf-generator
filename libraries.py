@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import mmap, string, random
+import mmap
+import string
+import random
+from jinja2 import Template
 
 class Vhost:
 
@@ -94,14 +97,19 @@ class Vhost:
         return False
 
     def generate_strings(self, path):
-       self.user_string = self.open_and_replace( path + r"\templates\user.tpl")
-       self.logrotate_string = self.open_and_replace( path + r"\templates\logrotate.tpl")
-       if self.samba_share:
-           self.samba_string = self.open_and_replace( path + r"\templates\samba.tpl")
-       else:
-           self.samba_string = ""
-       self.vhost_string = self.open_and_replace( path + r"\templates\vhost.tpl")
-       self.cmd_string = self.open_and_replace( path + r"\templates\cmd.tpl")
+       self.user_string = self.render(path + r"\templates\user.tpl")
+       self.logrotate_string = self.render(path + r"\templates\logrotate.tpl")
+       self.samba_share = self.render(path + r"\templates\samba.tpl")
+       self.vhost_string = self.render(path + r"\templates\vhost.tpl")
+       self.cmd_string = self.render(path + r"\templates\cmd.tpl")
+
+    def render(self, template_file):
+       with open(template_file) as f:
+           s = f.read()
+
+       t = Template(s)
+       return t.render(vhost=self)
+
 
     def prospect(self):
         return {

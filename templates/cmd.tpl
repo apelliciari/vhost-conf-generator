@@ -1,3 +1,3 @@
-mkdir {{vhost_root}} {{vhost_root}}/logs {{document_root}}
-chown {{user}}:apache {{vhost_root}}
-chown {{user}}:apache {{document_root}}
+mkdir {{vhost.vhost_root}} {{vhost.vhost_root}}/logs {{vhost.document_root}}
+chown {{vhost.user}}:apache {{vhost.vhost_root}}
+chown {{vhost.user}}:apache {{vhost.document_root}}
