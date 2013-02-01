@@ -76,26 +76,6 @@ class Vhost:
 
         return vhost
 
-    def replace_all(self, text):
-        for i, j in self.__dict__.iteritems():
-            text = text.replace("{{" + i + "}}", str(j))
-        return text
-
-    def open_and_replace(self, tpl):
-        f = open(tpl)
-        s = f.read()
-        f.close()
-        s = self.replace_all(s)
-        return s
-
-    def search_in_file(self, file, text):
-        f = open(file)
-        s = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
-        if text in s:
-            return True
-
-        return False
-
     def generate_strings(self, path):
        self.user_string = self.render(path + r"\templates\user.tpl")
        self.logrotate_string = self.render(path + r"\templates\logrotate.tpl")
@@ -109,7 +89,6 @@ class Vhost:
 
        t = Template(s)
        return t.render(vhost=self)
-
 
     def prospect(self):
         return {
