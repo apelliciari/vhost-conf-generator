@@ -1,0 +1,44 @@
+--- # config
+
+defaults:
+    ip: "192.168.2.106"
+    shell: /sbin/nologin
+
+options:
+    write_in_netposition: 0
+
+
+vhosts:
+    - user: 'webtest.greendemo.local'
+      user_home: '' #da specificare se diverso da user
+      vhost_name: '' #da specificare solo se diverso da user_home
+      samba_share: 'Greendemo_WebTest'
+      password: '' #default no password
+      document_root: '' #da specificare se diversa da user_home
+      shell: '' #da specificare se diversa da default
+      vhost_directives: '' # direttive aggiuntive per il vhost
+
+    - user: 'webtest2.greendemo.local'
+      user_home: '' #da specificare se diverso da user
+      vhost_name: '' #da specificare solo se diverso da user_home
+      samba_share: 'Greendemo_WebTest2'
+      password: '' #default no password
+      document_root: '' #da specificare se diversa da user_home
+      shell: '/bin/bash' #da specificare se diversa da default
+      vhost_directives: '' # direttive aggiuntive per il vhost
+
+    - user: 'greendemo.local'
+      user_home: '' #da specificare se diverso da user
+      vhost_name: '' #da specificare solo se diverso da user_home
+      samba_share: 'Greendemo_WebTest'
+      password: '' #default no password
+      document_root: '' #da specificare se diversa da user_home
+      shell: '' #da specificare se diversa da default
+      vhost_directives: 'RewriteMap ...' # direttive aggiuntive per il vhost
+      nopassword: 1
+      vhost_directory_options: |
+         test1
+             test2
+
+    - user: 'zeroparametri.greendemo.local'
+      

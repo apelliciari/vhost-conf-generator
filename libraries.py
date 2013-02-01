@@ -3,7 +3,7 @@ import mmap, string, random
 class Vhost:
 
     def __init__(self, user, user_home=None, document_root=None, samba_share=None, shell=None, password=None,
-            vhost_directives=None, vhost_name=None, vhost_directory_options=None ):
+            vhost_directives=None, vhost_name=None, vhost_directory_options=None, vhost_root=None ):
 
         self.user = user
 
@@ -15,11 +15,15 @@ class Vhost:
         self.vhost_name = vhost_name
 
         if not user_home or user_home is None:
-            user_home = "/var/www/vhosts/" + vhost_name
+            user_home = "/var/www/vhosts/" + user
         self.user_home = user_home
 
+        if not vhost_root or vhost_root is None:
+            vhost_root = user_home + vhost_name
+        self.vhost_root = vhost_root
+
         if not document_root or document_root is None:
-            document_root = user_home + "/htdocs"
+            document_root = vhost_root + "/htdocs"
         self.document_root = document_root
 
         if not vhost_directory_options or vhost_directory_options is None:
@@ -46,6 +50,7 @@ class Vhost:
         vhost = clss(
                 user=yaml_block['user'],
                 user_home=yaml_block.get('user_home', None),
+                vhost_root=yaml_block.get('vhost_root', None),
                 document_root=yaml_block.get('document_root', None),
                 samba_share=yaml_block.get('samba_share', None),
                 password=yaml_block.get('password', None),

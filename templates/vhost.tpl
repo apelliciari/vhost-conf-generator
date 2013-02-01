@@ -6,7 +6,7 @@
     <Directory "{{document_root}}">
     {{vhost_directory_options}}
     </Directory>
-    ErrorLog {{user_home}}/logs/error_log
-    CustomLog {{user_home}}/logs/access_log combined
+    ErrorLog {{vhost_root}}/logs/error_log
+    CustomLog {{vhost_root}}/logs/access_log combined
     {{vhost_directives}}
 </VirtualHost>

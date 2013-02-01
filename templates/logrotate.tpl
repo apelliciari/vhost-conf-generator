@@ -1,1 +1,1 @@
-{{user_home}}/logs/*log
+{{vhost_root}}/logs/*log

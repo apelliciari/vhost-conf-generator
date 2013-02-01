@@ -1,2 +1,3 @@
-mkdir {{user_home}}/logs {{user_home}}/htdocs
-chown {{user}}:apache {{user_home}}/htdocs
+mkdir {{vhost_root}} {{vhost_root}}/logs {{document_root}}
+chown {{user}}:apache {{vhost_root}}
+chown {{user}}:apache {{document_root}}
