@@ -2,12 +2,16 @@ import mmap, string, random
 
 class Vhost:
 
+    basepath = "/var/www/vhosts/"
+
     def __init__(self, user, user_home=None, document_root=None, samba_share=None, shell=None, password=None,
             vhost_directives=None, vhost_name=None, vhost_directory_options=None, vhost_root=None ):
+
 
         self.user = user
 
         opt = ""
+
         if not vhost_name or vhost_name is None:
             if len(user.split('.')) == 2:
                 opt = "www."
@@ -15,11 +19,11 @@ class Vhost:
         self.vhost_name = vhost_name
 
         if not user_home or user_home is None:
-            user_home = "/var/www/vhosts/" + user
+            user_home = self.basepath + user
         self.user_home = user_home
 
         if not vhost_root or vhost_root is None:
-            vhost_root = user_home + vhost_name
+            vhost_root = self.basepath + vhost_name
         self.vhost_root = vhost_root
 
         if not document_root or document_root is None:
