@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os, datetime
 from optparse import OptionParser
 from libraries import Vhost
@@ -8,18 +10,23 @@ from pprint import pprint, pformat
 # per pyinstaller
 resource_path = os.environ.get("_MEIPASS2", os.path.abspath(".") )
 parser = OptionParser()
-parser.add_option("-c", "--conf", dest="config_file", default="config.yml",
+parser.add_option("-c", "--conf", dest="config_file",
                   help="Nome file con le definizioni degli spazi (in formato YAML, .yml)")
 
 (options, args) = parser.parse_args()
 
+if not options.config_file:
+    parser.error("Il file di configurazione e' richiesto")
+
 stream = file(options.config_file, 'r')    # 'document.yaml' contains a single YAML document.
 yaml_result = yaml.load(stream)
 
+import pdb; pdb.set_trace()
+
 vhosts = []
 
-for vhost in yaml_result['vhosts']:
-    vhosts.append(Vhost.from_yaml(vhost, yaml_result['defaults']))
+for yaml_vhost in yaml_result['vhosts']:
+    vhosts.append(Vhost.yaml( dict(yaml_defaults.items() + yaml_vhost.items()) )
 
 path = os.path.dirname(os.path.abspath(__file__))
 
@@ -89,8 +96,6 @@ else:
     f.close()
 
 print "Writing on SQL server..."
-
-
 
 if yaml_result["options"]["write_in_netposition"]:
     conn = pymssql.connect(host='CASTORE', user='python', password='python', database='NetPosition', as_dict=True)
