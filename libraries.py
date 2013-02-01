@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import mmap, string, random
 
 class Vhost:
@@ -15,11 +17,11 @@ class Vhost:
         if not vhost_name or vhost_name is None:
             if len(user.split('.')) == 2:
                 opt = "www."
-            vhost_name = opt + user
+            vhost_name = opt + user # se l'utente è senza www, lo aggiungo automaticamente al vhost
         self.vhost_name = vhost_name
 
         if not user_home or user_home is None:
-            user_home = self.basepath + user
+            user_home = self.basepath + user # chiaro che se l'utente era senza www la home sarà senza www
         self.user_home = user_home
 
         if not vhost_root or vhost_root is None:
