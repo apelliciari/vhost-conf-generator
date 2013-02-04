@@ -39,14 +39,14 @@ class Vhost:
         self.document_root = document_root
 
         if not directory_options or directory_options is None:
-            directory_options = settings.DEFAULT_VHOST_DIRECTIVES
+            directory_options = settings.DEFAULT_VHOST_DIRECTORY_OPTIONS
         self.directory_options = directory_options
 
         if not ip or ip is None:
             ip = settings.DEFAULT_VHOST_IP
         self.ip = ip
 
-        self.vhost_directives = vhost_directives
+        self.directives = directives
 
 
     @classmethod
@@ -54,7 +54,7 @@ class Vhost:
 
         new = clss(
                 user=User.yaml(yaml_opts['user']),
-                vhost_root=yaml_opts.get('root', None),
+                root=yaml_opts.get('root', None),
                 document_root=yaml_opts.get('document_root', None),
                 directives=yaml_opts.get('directives', None),
                 directory_options=yaml_opts.get('directory_options', None),
@@ -110,9 +110,13 @@ class Vhost:
 
 class User:
     def __init__(self, name,
-                    home=None, sgroup=None,
+                    home=None, group=None,
                         password=None, samba=None,
                             shell=None):
+
+        if name is None:
+            raise ValueError("il parametro 'user' è obbligatorio")
+        self.name = name
 
         if home is None:
             home = Vhost.basepath + name
@@ -124,22 +128,23 @@ class User:
 
         if group is None:
             group = Group()
-        self.grop = group
+        self.group = group
 
         if password is None:
            password = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for x in range(10))
         self.password = password
 
+        self.samba = samba
 
     @classmethod
     def yaml(clss, yaml_opts):
 
         new = clss(
-                group=Group.yaml(yaml_opts['group']),
+                group=Group.yaml(yaml_opts.get('group', {})),
                 name=yaml_opts.get('name', None),
                 password=yaml_opts.get('password', None),
                 home=yaml_opts.get('home', None),
-                samba=yaml_opts.get('samba', None)
+                samba=yaml_opts.get('samba', None),
                 shell=yaml_opts.get('shell', None)
                 )
 
@@ -149,10 +154,12 @@ class Group:
     def __init__(self, id=None, name=None):
 
         if name is None:
-            self.name = settings.DEFAULT_GROUP_NAME
+            name = settings.DEFAULT_GROUP_NAME
+        self.name = name
 
         if id is None:
-            self.id = settings.DEFAULT_GROUP_ID
+            id = settings.DEFAULT_GROUP_ID
+        self.id = id
 
     @classmethod
     def yaml(clss, yaml_opts):

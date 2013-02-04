@@ -25,8 +25,10 @@ import pdb; pdb.set_trace()
 
 vhosts = []
 
+yaml_defaults = yaml_result.get('defaults', {}) if type(yaml_result.get('defaults', {})) is dict else {}
+
 for yaml_vhost in yaml_result['vhosts']:
-    vhosts.append(Vhost.yaml( dict(yaml_defaults.items() + yaml_vhost.items()) )
+    vhosts.append(Vhost.yaml( dict(yaml_defaults.items() + yaml_vhost.items()) ) )
 
 path = os.path.dirname(os.path.abspath(__file__))
 

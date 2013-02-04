@@ -1,10 +1,10 @@
-{% if vhost.samba_share %}
-[{{vhost.samba_share}}]
+{% if vhost.user.samba %}
+[{{vhost.user.samba}}]
 	force create mode = 600
-	force user = {{vhost.user}}
+	force user = {{vhost.user.name}}
 	delete readonly = yes
 	writeable = yes
 	create mode = 644
-	path = {{vhost.user_home}}
+	path = {{vhost.user.home}}
 	force group = apache
 {% endif %}
