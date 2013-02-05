@@ -3,7 +3,7 @@ f = open("C:\\Users\\alessandro\\Desktop\\vhost_generator\\version")
 version = f.read()
 f.close()
 
-a = Analysis([os.path.join(HOMEPATH,'support\\_mountzlib.py'), os.path.join(HOMEPATH,'support\\useUnicode.py'), 'C:\\Users\\alessandro\\Desktop\\vhost_generator\\setup.py'],
+a = Analysis([os.path.join(HOMEPATH,'support\\_mountzlib.py'), os.path.join(HOMEPATH,'support\\useUnicode.py'), 'C:\\Users\\alessandro\\Desktop\\vhost_generator\\main.py'],
              pathex=['C:\\Home\\Python\\pyinstaller-1.5-rc1'])
 
 a.datas += [("templates/user.tpl",'C:\\Users\\alessandro\\Desktop\\vhost_generator\\templates\\user.tpl',"DATA")]
