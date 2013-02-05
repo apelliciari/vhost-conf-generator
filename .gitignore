@@ -1,3 +1,5 @@
 .ropeproject/
 oldstuff/
+build/
 *.pyc
+warnspec.txt
