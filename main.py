@@ -54,35 +54,46 @@ for vhost in vhosts:
 print "PARSED: "
 
 for index, vhost in enumerate(vhosts):
-    print "#" + unicode(index)
-    pprint(vhost.prospect())
+    print "#" + unicode(index) + ":" + repr(vhost)
 
 #user
 print "Writing configurations..."
 
+config_filename = os.path.basename(os.path.splitext(args.config_file)[0])
+output_name = config_filename + "-" + datetime.datetime.now().strftime("%Y-%m-%d.%H-%M")
+
+
 if len(vhosts) < 5:
-    f = open(output_dir + "\\" + datetime.datetime.now().strftime("%Y-%m-%d.%H-%M") + ".txt", "w")
+    f = open(output_dir + "\\" + output_name + ".txt", "w")
 
     for vhost in vhosts:
+        f.write('\n')
         f.write(vhost.user_string)
+    f.write('\n')
     for vhost in vhosts:
+        f.write('\n')
         f.write(vhost.logrotate_string)
+    f.write('\n')
     for vhost in vhosts:
         f.write(vhost.samba_string)
+    f.write('\n')
     for vhost in vhosts:
         f.write(vhost.vhost_string)
+    f.write('\n')
     for vhost in vhosts:
+        f.write('\n')
         f.write(vhost.cmd_string)
 
     f.close()
 
 else:
-    dir = output_dir + "\\" + datetime.datetime.now().strftime("%Y-%m-%d.%H-%M")
+    dir = output_dir + "\\" + output_name
     if not os.path.exists(dir):
         os.makedirs(dir)
 
     f = open(dir + r"\users.txt", "w")
     for vhost in vhosts:
+        f.write('\n')
         f.write(vhost.user_string)
     f.close()
 
@@ -103,6 +114,7 @@ else:
 
     f = open(dir + r"\mkdir-default-dirs.txt", "w")
     for vhost in vhosts:
+        f.write('\n')
         f.write(vhost.cmd_string)
     f.close()
 

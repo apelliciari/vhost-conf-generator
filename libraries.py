@@ -48,6 +48,8 @@ class Vhost:
 
         self.directives = directives
 
+    def __repr__(self):
+        return "%(name)s, with user %(user_name)s" % {'name': self.name, 'user_name': self.user.name}
 
     @classmethod
     def yaml(clss, yaml_opts):
@@ -87,7 +89,7 @@ class Vhost:
     def generate_strings(self, path):
        self.user_string = self.render(path + r"\templates\user.tpl")
        self.logrotate_string = self.render(path + r"\templates\logrotate.tpl")
-       self.samba_share = self.render(path + r"\templates\samba.tpl")
+       self.samba_string = self.render(path + r"\templates\samba.tpl")
        self.vhost_string = self.render(path + r"\templates\vhost.tpl")
        self.cmd_string = self.render(path + r"\templates\cmd.tpl")
 
@@ -97,15 +99,6 @@ class Vhost:
 
        t = Template(s)
        return t.render(vhost=self)
-
-    def prospect(self):
-        return {
-                'url': self.vhost_name,
-                'user': self.user,
-                'password': self.password,
-                'samba': self.samba_share,
-                'document_root': self.document_root
-                }
 
 
 class User:
