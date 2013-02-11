@@ -137,4 +137,20 @@ if args.write_to_netposition:
     conn.commit()
     conn.close()
 
+############## TODO ################
 
+### creazione script dns ###########
+
+#su giasone
+
+#dnscmd /ZoneAdd furla-branch2.local /Primary /file furla-branch2.local.dns
+#dnscmd /RecordAdd furla-branch2.local dev2 A 192.168.2.111
+#dnscmd /RecordAdd furla-branch2.local @ NS castore.netidea.local
+
+#su castore
+
+#dnscmd /zoneadd furla-branch2.local /secondary 192.168.2.100 furla-branch2.local.dns
+
+
+#i file sono qui
+#%WinDir%\System32\dns
