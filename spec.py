@@ -17,6 +17,8 @@ a.datas += [("templates/logrotate.tpl", projectfolder + 'templates\\logrotate.tp
 a.datas += [("templates/samba.tpl", projectfolder + 'templates\\samba.tpl',"DATA")]
 a.datas += [("templates/cmd.tpl", projectfolder + 'templates\\cmd.tpl',"DATA")]
 a.datas += [("templates/vhost.tpl", projectfolder + 'templates\\vhost.tpl',"DATA")]
+a.datas += [("templates/dns-giasone.tpl", projectfolder + 'templates\\vhost.tpl',"DATA")]
+a.datas += [("templates/dns-castore.tpl", projectfolder + 'templates\\vhost.tpl',"DATA")]
 
 pyz = PYZ(a.pure)
 exe = EXE( pyz,
