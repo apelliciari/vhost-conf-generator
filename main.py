@@ -84,6 +84,18 @@ if len(vhosts) < 5:
         f.write('\n')
         f.write(vhost.cmd_string)
 
+    f.write('\n')
+    for vhost in vhosts:
+        if vhost.dns_giasone_string:
+            f.write('\n')
+            f.write(vhost.dns_giasone_string)
+
+    f.write('\n')
+    for vhost in vhosts:
+        if vhost.dns_castore_string:
+            f.write('\n')
+            f.write(vhost.dns_castore_string)
+
     f.close()
 
 else:
@@ -116,6 +128,20 @@ else:
     for vhost in vhosts:
         f.write('\n')
         f.write(vhost.cmd_string)
+    f.close()
+
+    f = open(dir + r"\dns-giasone.txt", "w")
+    for vhost in vhosts:
+        if vhost.dns_giasone_string:
+            f.write('\n')
+            f.write(vhost.dns_giasone_string)
+    f.close()
+
+    f = open(dir + r"\dns-giasone.txt", "w")
+    for vhost in vhosts:
+        if vhost.dns_castore_string:
+            f.write('\n')
+            f.write(vhost.dns_castore_string)
     f.close()
 
 

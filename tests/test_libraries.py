@@ -24,6 +24,9 @@ class TestVhost:
         assert vhost.user.shell == '/sbin/nologin'
         assert vhost.directives is None
         assert vhost.directory_options == settings.DEFAULT_VHOST_DIRECTORY_OPTIONS
+        assert vhost.dns_zone == "piquadro.local"
+        assert vhost.dns_record == "dev3"
+
 
 
     def test_yaml_simple(self):
@@ -219,26 +222,30 @@ chown dev3.piquadro.local:apache /var/www/vhosts/dev3.piquadro.local/htdocs"""
 
         assert dict(default.items() + vhost.items()) == merge
 
-        #a = {'ip': "1",
-             #'user'  }
-        #p
-#{'ip': '192.168.2.111',
- #'user': {'group': {'id': 45, 'name': 'nginx'},
-          #'name': 'webtests',
-          #'samba': 'Greendemo_WebTest',
-          #'shell': '/bin/bash'}}
-#{'ip': '192.168.2.106',
- #'name': 'webtest.greendemo.local',
- #'root': '/var/www/vhost/webtests/webtest.greendemo.local',
- #'user': {'name': 'webtests'}}
-#{'ip': '192.168.2.106',
- #'name': 'webtest.greendemo.local',
- #'root': '/var/www/vhost/webtests/webtest.greendemo.local',
- #'user': {'name': 'webtests'}}
-#{'ip': '192.168.2.111',
- #'name': 'webtest.greendemo.local',
- #'root': '/var/www/vhost/webtests/webtest.greendemo.local',
- #'user': {'group': {'id': 45, 'name': 'nginx'},
-          #'name': 'webtests',
-          #'samba': 'Greendemo_WebTest',
-          #'shell': '/bin/bash'}}
+    def test_render_giasone(self):
+        vhost = Vhost(
+                user=User(
+                    name="dev3.piquadro.local",
+                    password="test",
+                    samba="dev3_piquadro"),
+                name="dev3.piquadro.local"
+                )
+
+        # works only if pytest is launched from the project root
+        assert vhost.render("templates\\dns-giasone.tpl") == \
+"""dnscmd /ZoneAdd piquadro.local /Primary /file piquadro.local.dns
+dnscmd /RecordAdd piquadro.local dev3 A 192.168.2.111
+dnscmd /RecordAdd piquadro.local @ NS castore.netidea.local"""
+
+    def test_render_castore(self):
+        vhost = Vhost(
+                user=User(
+                    name="dev3.piquadro.local",
+                    password="test",
+                    samba="dev3_piquadro"),
+                name="dev3.piquadro.local"
+                )
+
+        # works only if pytest is launched from the project root
+        assert vhost.render("templates\\dns-castore.tpl") == \
+"""dnscmd /zoneadd piquadro.local /secondary 192.168.2.100 piquadro.local.dns"""

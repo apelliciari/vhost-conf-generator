@@ -48,6 +48,10 @@ class Vhost:
 
         self.directives = directives
 
+
+        # interni
+        self.dns_record, self.dns_zone = self.name.split(".", 1) # maxsplit a 1
+
     def __repr__(self):
         return "%(name)s, with user %(user_name)s" % {'name': self.name, 'user_name': self.user.name}
 
@@ -66,32 +70,16 @@ class Vhost:
 
         return new
 
-        #vhost = clss(
-                #user=yaml_block['user'],
-                #user_home=yaml_block.get('user_home', None),
-                #vhost_root=yaml_block.get('vhost_root', None),
-                #document_root=yaml_block.get('document_root', None),
-                #samba_share=yaml_block.get('samba_share', None),
-                #password=yaml_block.get('password', None),
-                #vhost_directives=yaml_block.get('vhost_directives', None),
-                #shell=yaml_block.get('shell', None),
-                #vhost_name=yaml_block.get('vhost_name', None))
-
-        #vhost.shell = yaml_block['shell'] if yaml_block.get('shell', None) else yaml_defaults['shell']
-
-        #if yaml_block.get('vhost_directory_options', None):
-            #vhost.vhost_directory_options = yaml_block['vhost_directory_options']
-
-        #vhost.password = '' if yaml_block.get('nopassword', None) or yaml_defaults.get('nopassword', None) else vhost.password
-
-        #return vhost
-
     def generate_strings(self, path):
        self.user_string = self.render(path + r"\templates\user.tpl")
        self.logrotate_string = self.render(path + r"\templates\logrotate.tpl")
        self.samba_string = self.render(path + r"\templates\samba.tpl")
        self.vhost_string = self.render(path + r"\templates\vhost.tpl")
        self.cmd_string = self.render(path + r"\templates\cmd.tpl")
+
+       if self.ip.startswith("192.168"):
+           self.dns_giasone_string = self.render(path + r"\templates\dns-giasone.tpl")
+           self.dns_castore_string = self.render(path + r"\templates\dns-castore.tpl")
 
     def render(self, template_file):
        with open(template_file) as f:
@@ -164,25 +152,3 @@ class Group:
 
         return new
 
-    #@classmethod
-    #def from_yaml(clss, yaml_block, yaml_defaults):
-
-        #vhost = clss(
-                #user=yaml_block['user'],
-                #user_home=yaml_block.get('user_home', None),
-                #vhost_root=yaml_block.get('vhost_root', None),
-                #document_root=yaml_block.get('document_root', None),
-                #samba_share=yaml_block.get('samba_share', None),
-                #password=yaml_block.get('password', None),
-                #vhost_directives=yaml_block.get('vhost_directives', None),
-                #shell=yaml_block.get('shell', None),
-                #vhost_name=yaml_block.get('vhost_name', None))
-
-        #vhost.shell = yaml_block['shell'] if yaml_block.get('shell', None) else yaml_defaults['shell']
-
-        #if yaml_block.get('vhost_directory_options', None):
-            #vhost.vhost_directory_options = yaml_block['vhost_directory_options']
-
-        #vhost.password = '' if yaml_block.get('nopassword', None) or yaml_defaults.get('nopassword', None) else vhost.password
-
-        #return vhost
