@@ -111,16 +111,19 @@ else:
 
     f = open(dir + r"\logrotation.txt", "w")
     for vhost in vhosts:
+        f.write('\n')
         f.write(vhost.logrotate_string)
     f.close()
 
     f = open(dir + r"\samba.txt", "w")
     for vhost in vhosts:
+        f.write('\n')
         f.write(vhost.samba_string)
     f.close()
 
     f = open(dir + r"\vhosts.txt", "w")
     for vhost in vhosts:
+        f.write('\n')
         f.write(vhost.vhost_string)
     f.close()
 
@@ -137,7 +140,7 @@ else:
             f.write(vhost.dns_giasone_string)
     f.close()
 
-    f = open(dir + r"\dns-giasone.txt", "w")
+    f = open(dir + r"\dns-castore.txt", "w")
     for vhost in vhosts:
         if vhost.dns_castore_string:
             f.write('\n')
