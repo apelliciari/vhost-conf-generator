@@ -155,14 +155,14 @@ if args.write_to_netposition:
     descrizione = ">> python vhost generator @ " + datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
     for vhost in vhosts:
-        cur.execute('SELECT * FROM DominiSingoli WHERE URL=%s and Username=%s', (vhost.vhost_name, vhost.user ))
+        cur.execute('SELECT * FROM DominiSingoli WHERE URL=%s and Username=%s', (vhost.name, vhost.user.name ))
 
         row = cur.fetchone()
         if row is not None:
-            cur.execute('UPDATE DominiSingoli SET Password=%s, Descrizione=%s where IdDominioSingolo = %s', (vhost.password, descrizione, row['IdDominioSingolo'] ))
+            cur.execute('UPDATE DominiSingoli SET Password=%s, Descrizione=%s where IdDominioSingolo = %s', (vhost.user.password, descrizione, row['IdDominioSingolo'] ))
         else:
             cur.execute('INSERT INTO DominiSingoli (URL, Username, Password, Descrizione) \
-                            VALUES (%s, %s, %s, %s)', (vhost.vhost_name, vhost.user, vhost.password, descrizione ))
+                            VALUES (%s, %s, %s, %s)', (vhost.name, vhost.user.name, vhost.user.password, descrizione ))
     conn.commit()
     conn.close()
 
