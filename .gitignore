@@ -3,3 +3,4 @@ oldstuff/
 build/
 *.pyc
 warnspec.txt
+executables/*
