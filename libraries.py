@@ -80,6 +80,10 @@ class Vhost:
        if self.ip.startswith("192.168"):
            self.dns_giasone_string = self.render(path + r"\templates\dns-giasone.tpl")
            self.dns_castore_string = self.render(path + r"\templates\dns-castore.tpl")
+       else:
+           self.dns_giasone_string = None
+           self.dns_castore_string = None
+
 
     def render(self, template_file):
        with open(template_file) as f:
